@@ -1,7 +1,7 @@
 # Title: mIBD Global Systematic Review Shiny Application, map overview tab
 # Contributor: Lindsay Hracs, Julia Gorospe
 # Created: 2026-01-27
-# Updated: 2026-07-30
+# Updated: 2026-08-11
 # R version 4.5.0 (2025-04-11)
 # Platform: aarch64-apple-darwin20 (64-bit)
 # Running under: macOS Sequoia 15.6.1
@@ -103,7 +103,7 @@ mapServer <- function(id) {
     
     ## Data prep -------------------------------------
     
-    country_data <- data_subset %>% 
+    country_data <- geo %>% 
       group_by(name) %>% 
       summarize(cases = n(),
                 genes = length(unique(gene_name))) %>% 
@@ -114,7 +114,6 @@ mapServer <- function(id) {
     
     # Tips for recolouring polygons: https://github.com/rstudio/leaflet/issues/496
     # Idea for instant update: https://stackoverflow.com/questions/69033403/how-to-refresh-sliderinput-in-shiny-in-real-time-not-only-when-the-sliding-en
-    map_pal <- colorNumeric(palette = c("#DBFEF4", "#002B1E"), domain = range(country_data$cases, na.rm = TRUE))
     
     labels <- paste0("<span style = 'font-size: 125%;'><b>", country_data$name,"</b>", 
                            "<br>Cases: ", country_data$cases,
@@ -165,8 +164,8 @@ mapServer <- function(id) {
     
     # default summary text and plot in side bar
     output$summary <- renderText({"Summary for all regions:"})
-    output$sum_cases <- renderText({paste0("  Cases reported: ", nrow(data_subset))})
-    output$sum_genes <- renderText({paste0("  Unique genes: ", length(unique(data_subset$gene_name)))})
+    output$sum_cases <- renderText({paste0("  Cases reported: ", nrow(data))})
+    output$sum_genes <- renderText({paste0("  Unique genes: ", length(unique(data$gene_name)))})
     
     output$plot <- renderPlotly({
       data %>%
@@ -198,11 +197,11 @@ mapServer <- function(id) {
     observeEvent(input$map_click, {
       
       output$summary <- renderText({"Summary for all regions:"})
-      output$sum_cases <- renderText({paste0("  Cases reported: ", nrow(data_subset))})
-      output$sum_genes <- renderText({paste0("  Unique genes: ", length(unique(data_subset$gene_name)))})
+      output$sum_cases <- renderText({paste0("  Cases reported: ", nrow(data))})
+      output$sum_genes <- renderText({paste0("  Unique genes: ", length(unique(data$gene_name)))})
       
       output$plot <- renderPlotly({
-        data_subset %>%
+        data %>%
           bar_genes(.) %>%
           layout(plot_bgcolor = "#F6F6F6", paper_bgcolor = "#F6F6F6")})
       

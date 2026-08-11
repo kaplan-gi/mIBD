@@ -1,7 +1,7 @@
 # Title: mIBD Global Systematic Review Shiny Application, gene-specific plots
 # Contributor: Lindsay Hracs, Julia Gorospe
 # Created: 2026-01-27
-# Updated: 2026-07-30
+# Updated: 2026-08-11
 # R version 4.5.0 (2025-04-11)
 # Platform: aarch64-apple-darwin20 (64-bit)
 # Running under: macOS Sequoia 15.6.1
@@ -99,7 +99,7 @@ genesUI <- function(id) {
           
           # D) THERAPIES
           navset_card_tab(
-            nav_panel(shiny::icon("circle-info"), p("##Disclaimer text: contents reflect published observations and should not be taken as medical advice... get text from Dagmar")),
+            nav_panel(shiny::icon("circle-info"), p("The medication/therapeutic information presented in this application is based on published reports identified through a systematic review. It is provided for informational and research purposes only and should not be interpreted as a treatment recommendation, prescribing guidance, or evidence that a medication is safe or effective for a particular patient or condition.")),
             nav_spacer(),
             nav_panel(
               title = "Therapeutic Attempts",
@@ -163,7 +163,7 @@ genesServer <- function(id) {
 
       # summary box
       output$sum_cases <- renderText({paste0("Cases reported: ", length(unique(gene_data()$record_number)))})
-      output$sum_vars <- renderText({paste0("Unique variants: ", length(unique(gene_data()$aa_change)))})
+      output$sum_vars <- renderText({paste0("Unique variants: ", length(unique(na.omit(gene_data()$aa_change)))+length(unique(na.omit(gene_data()$aa_change_2))))})
       output$sum_articles <- renderText({paste0("Publications: ", length(unique(gene_data()$DOI)))})
   
       
@@ -195,32 +195,6 @@ genesServer <- function(id) {
                    save.svg.btn = FALSE,   # Hides the SVG download button
                    plot.options = options)
       })
-
-      
-      # sankey
-      # nodes <- data.frame(
-      #   label = c("CD", "UC", "IBDU", "L1", "L2", "E4", "Penetrating", "Stricturing")
-      # )
-      # 
-      # links <- data.frame(
-      #   source = c(0, 0, 1, 2, 3, 3),   # indices into nodes
-      #   target = c(3, 4, 5, 4, 6, 7),
-      #   value  = c(10, 5, 7, 8, 2, 3)
-      # )
-      # 
-      # output$sankey <- renderPlotly({
-      #   plot_ly(
-      #       type = "sankey",
-      #       node = list(
-      #         label = nodes$label
-      #       ),
-      #       link = list(
-      #         source = links$source,
-      #         target = links$target,
-      #         value  = links$value
-      #       )
-      #     )
-      # })
       
       
       # B) PHENOTYPE, build  pie chart
@@ -251,15 +225,13 @@ genesServer <- function(id) {
     
        
       # C) GEOGRAPHIC MAP, build map
-      geo_data <- reactive({data_subset %>% 
+      geo_data <- reactive({geo %>% 
           filter(gene_name == input$gene) %>% 
           group_by(name) %>% 
           summarize(cases = n(),
                     variants = length(unique(aa_change))) %>% 
           ungroup()
       })
-      
-
       
       output$map <- renderLeaflet({
         
@@ -329,7 +301,7 @@ genesServer <- function(id) {
           )
       })
       
-      
+      # E) EICs
       output$bar <- renderPlotly({
         data_eic_react() %>%
           group_by(eic_type) %>% 
@@ -338,7 +310,7 @@ genesServer <- function(id) {
           add_trace(x = ~count, y = ~eic_type,
                     type = "bar",
                     orientation = "h",
-                    marker = list(color = "#0b8964"),
+                    marker = list(color = "#D95F02"),
                     #text = ~eic_type,
                     #textposition = "outside",
                     hoverinfo = "skip",
@@ -346,7 +318,8 @@ genesServer <- function(id) {
           layout(xaxis = list(title = "Case Count"),
                  yaxis = list(title = "",
                               #showticklabels = FALSE,
-                              categoryorder = "total descending"),
+                              autorange = "reversed"
+                              ),
                  font = list(family = "Ubuntu"),
                  margin = list(l = 0, r = 5, t = 10, b = 10)) %>% 
           config(displayModeBar = FALSE)

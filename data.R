@@ -221,22 +221,15 @@ dataServer <- function(id) {
     output$table <- renderDataTable({
       data_react() %>% 
         mutate(link = paste0("<a href='https://doi.org/", DOI,"' target='_blank'><i class='fa fa-external-link' style='font-size:18px; color: #408697'></i></a>")) %>%
-        select(link, everything()) %>% 
+        mutate(`Protein Change` = ifelse(!is.na(aa_change_2), paste0(aa_change, ", ", aa_change_2), aa_change)) %>% 
+        select(Link = link, Gene = gene_name, `Protein Change`, Country = country, `IBD Type` = IBD_subtype, Sex = sex, EIC = eic) %>% 
         datatable(., 
                   rownames = FALSE,  escape = FALSE, class = "hover nowrap cell-border stripe",
                   style = "bootstrap", extensions = "Scroller",
                   options = list(dom = "frti",
                                  scrollX = TRUE,
                                  scrollY = "60vh",
-                                 scroller = TRUE,
-                                 columnDefs = list(list(visible = FALSE, targets = c("record_number", "DOI"))
-                                                   # list(render = JS(
-                                                   #   "function(data, type, row, meta) {",
-                                                   #   "return type === 'display' && data.length > 18 ?",
-                                                   #   "'<span title=\"' + data + '\">' + data.substr(0, 18) + '...</span>' : data;",
-                                                   #   "}"), targets = c("aa_change", "variant_type"))
-                                                   )
-                                 )
+                                 scroller = TRUE)
                   ) # to shorten long text
     })
     

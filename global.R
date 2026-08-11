@@ -1,11 +1,14 @@
 # Title: mIBD Global Systematic Review Shiny Application, global with packages and data
 # Contributor: Lindsay Hracs, Julia Gorospe
 # Created: 2026-01-27
-# Updated: 2026-07-30
+# Updated: 2026-08-11
 # R version 4.5.0 (2025-04-11)
 # Platform: aarch64-apple-darwin20 (64-bit)
 # Running under: macOS Sequoia 15.6.1
 
+
+# trouble shooting terra dependancy issues when publishing to posit
+# https://forum.posit.co/t/deployment-fails-on-shinyapps-io-because-of-terra/214331/14
 
 # load libraries
 library(rsconnect) # version 0.8.18
@@ -33,28 +36,19 @@ path <- "https://raw.githubusercontent.com/kaplan-gi/mIBD/main/"
 geo <- geojson_sf(paste0(path, "mIBD_data_geo.geojson"))
 
 data <- read_csv(paste0(path, "mIBD_data.csv")) %>% 
-    mutate(IBD_subtype = case_when(IBD_subtype == "Crohn's Disease" ~ "CD",
-                                   IBD_subtype == "Ulcerative Colitis" ~ "UC",
-                                   IBD_subtype == "Crohn's like disease" ~ "CD-like",
-                                   TRUE ~ IBD_subtype)) # move to preprocessing
-
-data_subset <- geo %>% filter(name %in% data$country) %>% 
-  merge(., data, by.x = "name", by.y = "country") # move to preprocessing
+  pivot_wider(.,
+              names_from = heterozygous,
+              values_from = aa_change)
 
 
-
-# generate datasets 
-
-# row = case (data)
+# generate datasets
 
 # row = country summary (map)
-country_data <- data_subset %>% 
+country_data <- geo %>% 
   group_by(name) %>% 
   summarize(cases = n(),
             genes = length(unique(gene_name))) %>% 
   ungroup()
-
-# row = variant (append)
 
 # row = therapy (pivot)
 data_tre <- data %>% 
@@ -99,7 +93,6 @@ data_eic <- data %>%
   mutate(eic_bin = case_when(eic_bin == "Checked" ~ 1,
                             eic_bin == "Unchecked" ~ 0,
                             TRUE ~ NA))
-  #filter(eic_bin == "Checked")
 
 
 
@@ -111,6 +104,7 @@ plot_pal <- c('#88CCEE', '#44AA99', '#117733', '#332288', '#D3BD4E', '#999933','
 map_pal <- colorNumeric(palette = c("#DBFEF4", "#002B1E"), domain = range(country_data$cases, na.rm = TRUE))
 
 
+
 # random plot designs
 bar_genes <- function(df){
   df %>% 
@@ -119,7 +113,7 @@ bar_genes <- function(df){
     plot_ly() %>%
     add_trace(x = ~gene_name, y = ~case_count,
               type = "bar",
-              marker = list(color = "#0b8964"),
+              marker = list(color = "#D95F02"),
               hoverinfo = "skip",
               showlegend = FALSE) %>%
     layout(title = "<b>Gene Frequency</b>",

@@ -5473,19 +5473,19 @@
   },
   "files": {
     ".Rprofile": {
-      "checksum": "8c5f3889bd2a32ce83106876aefe7a7b"
+      "checksum": "6353bebd6bfeeb2b85e523cb1d03b660"
     },
     "app.R": {
-      "checksum": "387af8b447283896565f43883293792f"
+      "checksum": "e17f8b27af7843222a97a1c4662cb4ef"
     },
     "col_names.csv": {
-      "checksum": "d9e4da5b54db303203401373efed6193"
+      "checksum": "0c5ab42470f8cc2efe136e698a396989"
     },
     "data_preprocessing.R": {
-      "checksum": "d232c8b5c9481b71aee2abd784a4bd34"
+      "checksum": "f1cf567681e547cc14c61c7f055d2dd7"
     },
     "data.R": {
-      "checksum": "74ef1e1bfa12ac63cb37a4691bea4cbf"
+      "checksum": "304ea718a9cab4228319f3dcbd1cbc56"
     },
     "demo/b_geo_map.csv": {
       "checksum": "24ffaa67663f616418ff50bece37a3fe"
@@ -5515,10 +5515,10 @@
       "checksum": "b2f02ca73dfd3682abd4dc61bca712f7"
     },
     "genes.R": {
-      "checksum": "274ebbce96c47819b4cbc4166f3ea60a"
+      "checksum": "91bb31b69dcd9a42c14dab57d921dfea"
     },
     "global.R": {
-      "checksum": "bcb40f5a8d5e99950afd3dfe47028358"
+      "checksum": "a74261b599ecf13f85ddc0234ac4d946"
     },
     "human.ai": {
       "checksum": "2a1a099cddcbe80aa62f392919eea90a"
@@ -5527,19 +5527,16 @@
       "checksum": "20a728fbf8964e5f9c850916f57d887c"
     },
     "map.R": {
-      "checksum": "042c03a81036ebb98bc7c8896686c394"
+      "checksum": "9c152620e4406ccc05660f0319304c7c"
     },
     "mIBD mapping 8 July 2026 JOD download for Julia.xlsx": {
       "checksum": "13661fb0ef25c48ae5d7b1e744888a15"
     },
     "mIBD_data_geo.geojson": {
-      "checksum": "1cc53cbe543bdf5005462ea9ed58d865"
-    },
-    "mIBD_data_TEST.csv": {
-      "checksum": "1bb9dbda52da36749c7e2f4bbfd98ed7"
+      "checksum": "aea173cf172dfcc7d37cb1ac33c1120a"
     },
     "mIBD_data.csv": {
-      "checksum": "b6dbffdac460f10acd8fa05669c672e1"
+      "checksum": "75b11e1d9b601269cea3269a7f0f54a4"
     },
     "MIBDMappingProject_DATA_LABELS_2026-05-29_0933 first 10 calgary.csv": {
       "checksum": "d69ebc0bd7d144aa8f4d100a1219680a"

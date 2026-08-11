@@ -1,7 +1,7 @@
 # Title: mIBD Global Systematic Review Shiny Application
 # Contributor: Lindsay Hracs, Julia Gorospe
 # Created: 2026-01-27
-# Updated: 2026-07-30
+# Updated: 2026-08-11
 # R version 4.5.0 (2025-04-11)
 # Platform: aarch64-apple-darwin20 (64-bit)
 # Running under: macOS Sequoia 15.6.1
@@ -127,7 +127,8 @@ ui <- page_fillable(
       style = "color: #F6F6F6; background-color: #363538; margin: -20px -20px 0px -20px; padding: 25px 20px 5px 20px;",
         layout_columns(
           col_widths = c(8, 4),
-          tags$h2("Monogenic IBD: A global map"), ##DEMO SITE ONLY. NO EXTERNAL USE. Do not copy, share, publish, or report any data from this site.
+          tags$h2("##mIBD DEMO SITE. NO EXTERAL USE."),
+          #tags$h2("Monogenic IBD: A global map"),
   
             div(style = "display: flex; justify-content: flex-end; gap: 10px;",
    
@@ -177,7 +178,7 @@ ui <- page_fillable(
         nav_panel(tags$header(style = "text-align:center; padding-right:10px; padding-left:10px; font-size: 125%; font-weight:bold;",
                               shiny::icon("circle-info")),
                   div(
-                    style = "height: calc(100vh - 120px); overflow-y: auto; padding-right: 10px;",
+                    style = "height: calc(100vh - 140px); overflow-y: auto; padding-right: 10px;",
                     
                     HTML(
                       "<p style='margin: 20px 40px; font-size: 115%;'>
@@ -188,7 +189,7 @@ ui <- page_fillable(
                         The data presented in this web application are from a systematic review of mIBD case reports published in 2022, with updates ongoing. Articles linking any of the 75 mIBD-associated genes with IBD were retrieved from PubMed. A total of 750 unique cases were found, resulting in the compilation of a rich dataset.<br><br>
                       
                         <b>Using and Citing this Work</b><br>
-                        ##Add disclaimer. Data and figures may be downloaded. If you would like to reuse material, please cite the following:
+                        The medication/therapeutic information presented in this application is based on published reports identified through a systematic review. It is provided for informational and research purposes only and should not be interpreted as a treatment recommendation, prescribing guidance, or evidence that a medication is safe or effective for a particular patient or condition. Data and figures may be downloaded. If you would like to reuse material, please cite the following:
                     </p>
     
                     <ul style='margin: -10px 40px 20px 70px; font-size: 100%;'>
@@ -197,7 +198,7 @@ ui <- page_fillable(
     
                     <p style='margin: 20px 40px; font-size: 115%;'>
                           <b>Collaboration and Support</b><br>
-                          Research and data was prepared by members of the Muise Lab at SickKids in Toronto, Canada with support from the Canadian Institute for Health Research and the International Organization for IBD (##Helmsley? IBD centre? UofT?## REPLACE LOGOS##) <br></p>"
+                          Research and data was prepared by members of the Muise Lab at SickKids in Toronto, Canada with support from the Canadian Institute for Health Research and the International Organization for IBD <br></p>"
                     ),
                     
                     div(style = "display: flex; align-items: center; justify-content: center; gap: 50px; margin: 20px 40px;",
@@ -249,10 +250,10 @@ server <- function(input, output, session) {
   
   
   showModal(modalDialog(
-    title = "Welcome! ##UNDER DEVELOPMENT",
+    title = "Welcome! ##UNDER DEVELOPMENT. Do not copy, share, publish, or report any data from this site.",
     HTML("<p style = 'font-size: 100%;'>Thank you for visiting our mIBD data repository. Information about published cases of mIBD from around the world can be stratified and summarized visually.<br><br>
                     <b>Disclaimer:</b><br>
-                    ##Update text## All information presented is based on published observations and does not represent recommendations...<br><br>
+                    The medication/therapeutic information presented in this application is based on published reports identified through a systematic review. It is provided for informational and research purposes only and should not be interpreted as a treatment recommendation, prescribing guidance, or evidence that a medication is safe or effective for a particular patient or condition.<br><br>
                     <b>To cite:</b><br>
                     <i>Nambu R, Warner N, Mulder D, et al. A Systematic Review of Monogenic Inflammatory Bowel Disease. Clin Gastroenterol Hepatol. 2022 Apr;20(4):e653–e663. <a href='https://doi.org/10.1016/j.cgh.2021.03.021' target='_blank'>doi:10.1016/j.cgh.2021.03.021</a>.</i><br><br>
                     </p>"),
