@@ -240,7 +240,7 @@ genesServer <- function(id) {
                          "<br>Variants: ", geo_data()$variants) %>% lapply(htmltools::HTML)
         
         leaflet(data = geo_data(), options = leafletOptions(worldCopyJump = TRUE, minZoom = 1, maxZoom = 4, zoomControl = FALSE)) %>%
-          addProviderTiles("CartoDB.Positron") %>%
+          addProviderTiles("Esri.WorldGrayCanvas") %>%
           setView(lng = 30, lat = 20, zoom = 1) %>%
           addPolygons(fillColor = ~map_pal(cases), 
                       fillOpacity = 0.8,

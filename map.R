@@ -123,7 +123,7 @@ mapServer <- function(id) {
     output$map <- renderLeaflet({
       country_data %>% 
       leaflet(options = leafletOptions(worldCopyJump = TRUE, minZoom = 1, maxZoom = 4, zoomControl = FALSE)) %>%
-        addProviderTiles("CartoDB.Positron") %>%
+        addProviderTiles("Esri.WorldGrayCanvas") %>%
         setView(lng = 30, lat = 20, zoom = 2) %>%
         addPolygons(fillColor = ~map_pal(cases), 
                     fillOpacity = 0.8,

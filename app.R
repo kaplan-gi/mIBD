@@ -1,13 +1,15 @@
 # Title: mIBD Global Systematic Review Shiny Application
 # Contributor: Lindsay Hracs, Julia Gorospe
 # Created: 2026-01-27
-# Updated: 2026-08-11
+# Updated: 2026-08-11; 2026-09-29
 # R version 4.5.0 (2025-04-11)
 # Platform: aarch64-apple-darwin20 (64-bit)
 # Running under: macOS Sequoia 15.6.1
 
+# Update notes: 2026-09-29 changed base map from "CartoDB.Positron" to 
+# "Esri.WorldGrayCanvas"
 
-# link:
+# link: https://kaplan-global-epi-mibd.share.connect.posit.cloud
 
 # version notes:
 
